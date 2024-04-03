@@ -39,17 +39,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
 
-        <ImageView
+        <WebView
             android:id="@+id/iv_detail_trailer"
-            android:layout_width="262dp"
-            android:layout_height="261dp"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
             android:layout_margin="10dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
-            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_rating"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_rating" />
 
         <TextView
             android:id="@+id/tv_detail_release_date"
@@ -62,11 +60,11 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_detail_trailer" />
 
         <TextView
-            android:id="@+id/tv_detail_review"
+            android:id="@+id/tv_detail_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:text="review"
+            android:text="length"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_release_date" />
@@ -82,7 +80,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_review" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_length" />
 
 
         <TextView
