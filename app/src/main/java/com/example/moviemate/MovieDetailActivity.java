@@ -11,11 +11,12 @@ import android.widget.TextView;
 public class MovieDetailActivity extends AppCompatActivity {
     private final String LOG_TAG = this.getClass().getSimpleName();
 
-    TextView nameTextView;
-    TextView categoryTextView;
-    ImageView imageSource;
-    TextView alcoholicTextView;
-    TextView recipeTextView;
+    TextView tvMovieName;
+    TextView tvMovieRating;
+    TextView tvMovieLength;
+    TextView tvMovieReleaseDate;
+    TextView tvMovieCategory;
+    ImageView ivMoviePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +31,10 @@ public class MovieDetailActivity extends AppCompatActivity {
             Log.i(LOG_TAG, "new toolbar title" + toolbar.getTitle());
         }
 
-//        nameTextView = findViewById(R.id.cocktail_detail_name);
-//        categoryTextView = findViewById(R.id.cocktail_detail_category);
-//        imageSource = findViewById(R.id.cocktail_detail_image);
-//        alcoholicTextView = findViewById(R.id.cocktail_detail_alcoholic);
-//        ingredientView = findViewById(R.id.ingredient_list);
-//        recipeTextView = findViewById(R.id.cocktail_detail_recipe);
+        tvMovieName = findViewById(R.id.tv_detail_name);
+        tvMovieRating = findViewById(R.id.tv_detail_rating);
+        tvMovieLength = findViewById(R.id.tv_detail_rating);
+        tvMovieReleaseDate = findViewById(R.id.tv_detail_rating);
+        tvMovieRating = findViewById(R.id.tv_detail_rating);
     }
 }

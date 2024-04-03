@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/tv_detail_cocktail_name"
+            android:id="@+id/tv_detail_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
@@ -30,118 +30,101 @@
             app:layout_constraintTop_toBottomOf="@+id/include" />
 
         <TextView
-            android:id="@+id/tv_detail_cocktail_category"
+            android:id="@+id/tv_detail_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:textSize="24sp"
             android:text="Rating"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_cocktail_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
 
         <ImageView
-            android:id="@+id/iv_detail_cocktail_picture"
-            android:textSize="18sp"
+            android:id="@+id/iv_detail_trailer"
             android:layout_width="262dp"
             android:layout_height="261dp"
             android:layout_margin="10dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_cocktail_category"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_rating"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/tv_detail_cocktail_alcoholic_or_not"
-            android:textSize="18sp"
+            android:id="@+id/tv_detail_release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:text="Release date"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_detail_cocktail_picture" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_detail_trailer" />
 
         <TextView
-            android:id="@+id/tv_detail_cocktail_ingredients_amount"
-            android:textSize="18sp"
+            android:id="@+id/tv_detail_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:text="review"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_ingredients_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_release_date" />
 
         <TextView
-            android:id="@+id/tv_detail_cocktail_preparation_method"
-            android:textSize="18sp"
+            android:id="@+id/tv_detail_review_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
             android:layout_marginTop="12dp"
-            android:text="review"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="12dp"
+            android:text="review 1"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_preparation_name" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_review" />
 
 
         <TextView
-            android:id="@+id/tv_detail_cocktail_last_change"
-            android:textSize="18sp"
+            android:id="@+id/tv_detail_review_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:text="review"
+            android:text="review 2"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date_change_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_review_1" />
 
         <TextView
-            android:layout_marginStart="12dp"
-            android:textSize="18sp"
-            android:layout_marginTop="12dp"
-            android:id="@+id/tv_ingredients_name"
+            android:id="@+id/tv_detail_review_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text=""
+            android:layout_margin="12dp"
+            android:text="review 3"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_cocktail_alcoholic_or_not" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_review_2" />
 
         <TextView
-            android:layout_marginStart="12dp"
-            android:textSize="18sp"
-            android:layout_marginTop="6dp"
-            android:id="@+id/tv_preparation_name"
+            android:id="@+id/tv_detail_review_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_marginRight="14dp"
-            android:text=""
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_cocktail_ingredients_amount" />
-
-        <TextView
-            android:layout_marginStart="12dp"
+            android:layout_margin="12dp"
+            android:text="review 4"
             android:textSize="18sp"
-            android:layout_marginTop="12dp"
-            android:id="@+id/tv_date_change_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text=""
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_cocktail_preparation_method" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_review_3" />
 
-<!--        <Button-->
-<!--            android:id="@+id/btn_add_to_favorites"-->
-<!--            android:layout_marginStart="12dp"-->
-<!--            android:textSize="14sp"-->
-<!--            android:layout_marginTop="4dp"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text=""-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/tv_detail_cocktail_last_change" />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/btn_add_to_favorites"-->
+        <!--            android:layout_marginStart="12dp"-->
+        <!--            android:textSize="14sp"-->
+        <!--            android:layout_marginTop="4dp"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text=""-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/tv_detail_cocktail_last_change" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

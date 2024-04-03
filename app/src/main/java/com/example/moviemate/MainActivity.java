@@ -6,10 +6,13 @@ import com.example.moviemate.R;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.moviemate.data.MovieAPI;
 import com.example.moviemate.data.MovieAPITask;
@@ -34,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         // Initialize MovieAPI connection
         movieApi = new MovieAPI();
 
@@ -55,6 +61,21 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
 
         // destroy MovieAPI connection
         if (movieApi != null) movieApi.disconnect();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_menu_bar) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
