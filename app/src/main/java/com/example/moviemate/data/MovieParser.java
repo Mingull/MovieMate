@@ -15,6 +15,7 @@ import java.util.List;
 public class MovieParser extends AsyncTask<String, Void, ArrayList<Movie>> {
     private static String LOG_TAG = "MovieParser";
     private MovieParser.OnMovieParserListener listener;
+    private ArrayList<Movie> tempMovies;
 
     public MovieParser(MovieParser.OnMovieParserListener listener) {
         super();
@@ -23,13 +24,43 @@ public class MovieParser extends AsyncTask<String, Void, ArrayList<Movie>> {
 
     @Override
     protected ArrayList<Movie> doInBackground(String... params) {
-        if(params[0] == null) return null;
-        return jsonParseResponse(params[0]);
+        if (params[0] == null) return null;
+//        if (params[1] == null) return null;
+
+//        ArrayList<Movie> returnList = new ArrayList<>();
+        String response = params[0];
+//        String action = params[1];
+
+//        returnList.add(action);
+
+//        returnList.add(jsonParseResponse(response, action));
+        return jsonParseResponse(response);
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Movie> movies){
-this.listener.onParsedAllMovies(movies);
+    protected void onPostExecute(ArrayList<Movie> response) {
+        this.listener.onParsedAllMovies(response);
+//        if (!(response.get(0) instanceof String)) return;
+//        switch ((String) response.get(0)) {
+//            case "parseMovies":
+//                if (response.get(1) instanceof ArrayList<?>)
+//                    this.listener.onParsedAllMovies((ArrayList<Movie>) response.get(1));
+//                break;
+//            case "parseMoviesWithRuntime":
+//                if (response.get(1) instanceof ArrayList<?>) {
+//                    this.listener.onParsedAllMoviesWithRuntime((ArrayList<Movie>) response.get(1));
+//                }
+//                break;
+//            default:
+//                break;
+//        }
+    }
+
+    // Interface to communicate with the caller
+    public interface OnMovieParserListener {
+        void onParsedAllMovies(ArrayList<Movie> movies);
+
+//        void onParsedAllMoviesWithRuntime(ArrayList<Movie> movies);
     }
 
     // Method to parse JSON response and extract movie data
@@ -37,6 +68,8 @@ this.listener.onParsedAllMovies(movies);
         Log.i(LOG_TAG, "jsonParseResponse: " + response);
         ArrayList<Movie> movies = new ArrayList<>();
 
+        Log.i(LOG_TAG, "response: " + response);
+//        Log.i(LOG_TAG, "action: " + action);
         try {
             JSONArray results = getJsonResults(response, "results");
             for (int i = 0; i < results.length(); i++) {
@@ -51,6 +84,7 @@ this.listener.onParsedAllMovies(movies);
 
         return movies;
     }
+
     private static JSONArray getJsonResults(String response, String responseName) throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
 
@@ -68,8 +102,8 @@ this.listener.onParsedAllMovies(movies);
         double popularity = jsonObject.optDouble("popularity", 0.0);
         String posterPath = jsonObject.optString("poster_path", "");
         String releaseDate = jsonObject.optString("release_date", "");
-        int revenue = jsonObject.optInt("revenue", 0);
-        int runtime = jsonObject.optInt("runtime", 0);
+        int revenue = jsonObject.optInt("revenue", 347255055);
+        int runtime = jsonObject.optInt("runtime", 105);
         String status = jsonObject.optString("status", "");
         String tagline = jsonObject.optString("tagline", "");
         String title = jsonObject.optString("title", "");
@@ -145,11 +179,5 @@ this.listener.onParsedAllMovies(movies);
         return new Movie(id, adult, backdropPath, genres, imdbId, originalLanguage, originalTitle, overview, popularity,
                 posterPath, productionCompanies, productionCountries, releaseDate, revenue, runtime, spokenLanguages,
                 status, tagline, title, video, voteAverage, voteCount);
-    }
-
-    // Interface to communicate with the caller
-    public interface OnMovieParserListener {
-        void onParsedAllMovies(ArrayList<Movie> movies);
-
     }
 }

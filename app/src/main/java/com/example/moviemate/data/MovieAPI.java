@@ -2,6 +2,10 @@ package com.example.moviemate.data;
 
 import android.util.Log;
 
+import com.example.moviemate.Movie;
+
+import java.util.ArrayList;
+
 public class MovieAPI implements MovieAPITask.OnMovieAPITaskListener {
     private static String LOG_TAG = "MovieAPI";
     final private static String baseURL = "https://api.themoviedb.org/3";
@@ -28,20 +32,21 @@ public class MovieAPI implements MovieAPITask.OnMovieAPITaskListener {
         this.parserListener = parserListener;
     }
 
-    public void fetchMovie(String movieId, MovieParser.OnMovieParserListener parserListener) {
-        fetchData("/movie/" + movieId, "fetchMovie");
+    public void fetchAllMoviesWithRuntime(ArrayList<Movie> movies, MovieParser.OnMovieParserListener parserListener) {
+        for (Movie movie : movies) fetchData("/movie/" + movie.getId(), "fetchMovie");
         this.parserListener = parserListener;
     }
 
     @Override
     public void onFetchedAllMovies(String moviesResponse) {
         MovieParser parser = new MovieParser(this.parserListener);
-        parser.execute(moviesResponse);
+        parser.execute(moviesResponse, "parseMovies");
     }
 
     @Override
     public void onFetchedMovie(String movie) {
-
+        MovieParser parser = new MovieParser(this.parserListener);
+        parser.execute(movie, "parseMoviesWithRuntime");
     }
 }
  
