@@ -15,6 +15,7 @@ import com.example.moviemate.data.MovieAPI;
 import com.example.moviemate.data.MovieAPITask;
 import com.example.moviemate.data.MovieParser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.security.auth.login.LoginException;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
     private RecyclerView recyclerView;
     private MovieAdapter mAdapter;
     private MovieAPI movieApi;
+    private ArrayList<Movie> movies;
 
 
     @Override
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
 
     @Override
     public void onParsedAllMovies(ArrayList<Movie> movies) {
-        Log.i(LOG_TAG, "onParsedAllMovies: movies size = "+ movies.size());
+        Log.i(LOG_TAG, "onParsedAllMovies: movies size = " + movies.size());
         if (mAdapter == null) {
             mAdapter = new MovieAdapter(this, movies, this);
             recyclerView.setAdapter(mAdapter);
@@ -66,6 +68,27 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
             mAdapter.notifyDataSetChanged();
         }
     }
+
+
+//    @Override
+//    public void onParsedAllMovies(ArrayList<Movie> movies) {
+//        if (movieApi == null) return;
+//
+//        movieApi.fetchAllMoviesWithRuntime(movies, this);
+//    }
+
+
+//    @Override
+//    public void onParsedAllMoviesWithRuntime(ArrayList<Movie> movies) {
+//        Log.i(LOG_TAG, "onParsedAllMovies: movies size = " + movies.size());
+//        if (mAdapter == null) {
+//            mAdapter = new MovieAdapter(this, movies, this);
+//            recyclerView.setAdapter(mAdapter);
+//        } else {
+//            mAdapter.setData(movies); // Assuming you have a method to update data in the adapter
+//            mAdapter.notifyDataSetChanged();
+//        }
+//    }
 
     // Callback method invoked when a cocktail item is clicked
     @Override
