@@ -25,6 +25,7 @@ import javax.security.auth.login.LoginException;
 
 public class MainActivity extends AppCompatActivity implements MovieParser.OnMovieParserListener, MovieAdapter.OnItemClickListener {
     private String LOG_TAG = "MainActivity";
+    public static final String EXTRA_ADDED_MOVIE = "added_movie";
 
     private RecyclerView recyclerView;
     private MovieAdapter mAdapter;

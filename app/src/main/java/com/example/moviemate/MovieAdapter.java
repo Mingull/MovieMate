@@ -1,6 +1,7 @@
 package com.example.moviemate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.auth.login.LoginException;
@@ -20,11 +22,11 @@ import javax.security.auth.login.LoginException;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private String LOG_TAG = "MovieAdapter";
     private Context context;
-    private List<Movie> movieList;
+    private ArrayList<Movie> movieList;
     private OnItemClickListener listener;
 
     // Constructor to initialize the adapter with required parameters
-    public MovieAdapter(Context context, List<Movie> movieList, OnItemClickListener listener) {
+    public MovieAdapter(Context context, ArrayList<Movie> movieList, OnItemClickListener listener) {
         this.context = context;
         this.movieList = movieList;
         this.listener = listener;
@@ -84,11 +86,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && listener != null) {
-                        listener.onItemClick(movieList.get(position));
-                    }
+                    Log.d(LOG_TAG, "Listitem onClick: " + position);
+
+                    Movie movie = movieList.get(position);
+
+
+                    Intent intent = new Intent(view.getContext(), MovieDetailActivity.class);
+
+                    intent.putExtra(MainActivity.EXTRA_ADDED_MOVIE, movie);
+
+                    view.getContext().startActivity(intent);
                 }
             });
         }
