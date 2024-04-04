@@ -1,7 +1,5 @@
 package com.example.moviemate;
 
-import com.example.moviemate.R;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,13 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.moviemate.data.MovieAPI;
-import com.example.moviemate.data.MovieAPITask;
 import com.example.moviemate.data.MovieParser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import javax.security.auth.login.LoginException;
 
 public class MainActivity extends AppCompatActivity implements MovieParser.OnMovieParserListener, MovieAdapter.OnItemClickListener {
     private String LOG_TAG = "MainActivity";
@@ -29,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
 
     private RecyclerView recyclerView;
     private MovieAdapter mAdapter;
-    private MovieAPI movieApi;
+    public static MovieAPI movieApi;
     private ArrayList<Movie> movies;
 
 
@@ -74,9 +68,25 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_menu_bar) {
+            // Handle menu bar action
             return true;
+        } else if (id == R.id.action_top_rated) {
+            // Handle top-rated action
+            return true;
+        } else if (id == R.id.action_want_to_see) {
+            // Handle want to see action
+            return true;
+        } else if (id == R.id.action_seen) {
+            // Handle seen action
+            return true;
+        } else if (id == R.id.action_favorites) {
+            // Handle favorites action
+            Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
+            startActivity(intent);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

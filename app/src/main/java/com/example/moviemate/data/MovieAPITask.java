@@ -31,8 +31,6 @@ public class MovieAPITask extends AsyncTask<String, Void, ArrayList<String>> {
         String urlString = params[0];
         String action = params[1];
 
-        Log.i(LOG_TAG, "doInBackground url:" + urlString + " action: " + action);
-
         InputStream inputStream = null;
         int responseCode = -1;
         String response = null;
@@ -57,7 +55,7 @@ public class MovieAPITask extends AsyncTask<String, Void, ArrayList<String>> {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 inputStream = httpConnection.getInputStream();
                 response = getStringFromInputStream(inputStream);
-                Log.d(LOG_TAG, "response = " + response);
+//                Log.d(LOG_TAG, "response = " + response);
 
             }
         } catch (MalformedURLException e) {
@@ -75,14 +73,14 @@ public class MovieAPITask extends AsyncTask<String, Void, ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> response) {
         super.onPostExecute(response);
-        Log.i(LOG_TAG, "onPostExecute: action = " + response.get(0));
+//        Log.i(LOG_TAG, "onPostExecute: action = " + response.get(0));
 
         switch (response.get(0)) {
             case "fetchAllMovies":
                 listener.onFetchedAllMovies(response.get(1));
                 break;
-            case "fetchMovie":
-                listener.onFetchedMovie(response.get(1));
+            case "fetchMovieVideo":
+                listener.onFetchedMovieVideos(response.get(1));
                 break;
             default:
                 break;
@@ -93,7 +91,7 @@ public class MovieAPITask extends AsyncTask<String, Void, ArrayList<String>> {
     public interface OnMovieAPITaskListener {
         void onFetchedAllMovies(String movies);
 
-        void onFetchedMovie(String movie);
+        void onFetchedMovieVideos(String movie);
     }
 
     // Method to convert InputStream to String

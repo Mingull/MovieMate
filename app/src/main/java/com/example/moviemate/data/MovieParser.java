@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieParser extends AsyncTask<String, Void, ArrayList<Movie>> {
+public class MovieParser extends AsyncTask<String, Void, ArrayList<Object>> {
     private static String LOG_TAG = "MovieParser";
     private MovieParser.OnMovieParserListener listener;
     private ArrayList<Movie> tempMovies;
@@ -23,66 +23,93 @@ public class MovieParser extends AsyncTask<String, Void, ArrayList<Movie>> {
     }
 
     @Override
-    protected ArrayList<Movie> doInBackground(String... params) {
+    protected ArrayList<Object> doInBackground(String... params) {
+        Log.i(LOG_TAG, "doInBackground");
         if (params[0] == null) return null;
-//        if (params[1] == null) return null;
+        if (params[1] == null) return null;
 
-//        ArrayList<Movie> returnList = new ArrayList<>();
         String response = params[0];
-//        String action = params[1];
+        String action = params[1];
 
-//        returnList.add(action);
+        Log.i(LOG_TAG, "doInBackground - response: " + response);
 
-//        returnList.add(jsonParseResponse(response, action));
-        return jsonParseResponse(response);
+        return jsonParseResponse(response, action);
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Movie> response) {
-        this.listener.onParsedAllMovies(response);
-//        if (!(response.get(0) instanceof String)) return;
-//        switch ((String) response.get(0)) {
-//            case "parseMovies":
-//                if (response.get(1) instanceof ArrayList<?>)
-//                    this.listener.onParsedAllMovies((ArrayList<Movie>) response.get(1));
-//                break;
-//            case "parseMoviesWithRuntime":
-//                if (response.get(1) instanceof ArrayList<?>) {
-//                    this.listener.onParsedAllMoviesWithRuntime((ArrayList<Movie>) response.get(1));
-//                }
-//                break;
-//            default:
-//                break;
-//        }
+    protected void onPostExecute(ArrayList<Object> response) {
+        if(response == null) return;
+        Log.i(LOG_TAG, "onPostExecute: " + response.toString());
+        String action = (String) response.get(0);
+
+        ArrayList<Object> rest = new ArrayList<>(response.subList(1, response.size()));
+
+        Log.i(LOG_TAG, "onPostExecute - rest size: " + rest.size());
+        if (action.equals("parseMovies")) {
+            // check if the rest is an ArrayList of Movies
+            if (rest.size() != 0) {
+                ArrayList<Movie> movies = new ArrayList<>();
+                for (Object movie : rest) {
+                    movies.add((Movie) movie);
+                }
+                this.listener.onParsedAllMovies(movies);
+            }
+        }
+        if (action.equals("parseMovieVideos")) {
+            if (rest.size() != 0) {
+                ArrayList<Movie.Video> videos = new ArrayList<>();
+                for (Object movie : rest) {
+                    videos.add((Movie.Video) movie);
+                }
+                this.listener.onParsedMovieVideos(videos);
+            }
+        }
     }
 
     // Interface to communicate with the caller
     public interface OnMovieParserListener {
-        void onParsedAllMovies(ArrayList<Movie> movies);
+        default void onParsedAllMovies(ArrayList<Movie> movies) {
+        }
 
-//        void onParsedAllMoviesWithRuntime(ArrayList<Movie> movies);
+        default void onParsedMovieVideos(ArrayList<Movie.Video> videos) {
+        }
+
     }
 
     // Method to parse JSON response and extract movie data
-    private ArrayList<Movie> jsonParseResponse(String response) {
-        Log.i(LOG_TAG, "jsonParseResponse: " + response);
-        ArrayList<Movie> movies = new ArrayList<>();
+    private ArrayList<Object> jsonParseResponse(String response, String action) {
+        Log.i(LOG_TAG, "jsonParse Response: " + response);
+        Log.i(LOG_TAG, "jsonParse action: " + action);
+        ArrayList<Object> returnList = new ArrayList<>();
 
-        Log.i(LOG_TAG, "response: " + response);
-//        Log.i(LOG_TAG, "action: " + action);
+        returnList.add(action);
         try {
-            JSONArray results = getJsonResults(response, "results");
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject jsonObject = results.getJSONObject(i);
-                // Parse movie data from jsonObject
-                Movie movie = parseMovie(jsonObject);
-                movies.add(movie);
+            if (action.equals("parseMovies")) {
+                JSONArray results = getJsonResults(response, "results");
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject jsonObject = results.getJSONObject(i);
+                    // Parse movie data from jsonObject
+                    Movie movie = parseMovie(jsonObject);
+                    returnList.add(movie);
+                }
+            }
+
+            if (action.equals("parseMovieVideos")) {
+                JSONArray results = getJsonResults(response, "results");
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject jsonObject = results.getJSONObject(i);
+                    // Parse movie data from jsonObject
+                    Movie.Video movie = parseMovieVideo(jsonObject);
+                    returnList.add(movie);
+                }
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Error parsing JSON", e);
         }
 
-        return movies;
+        Log.i(LOG_TAG, "returnList: " + returnList);
+
+        return returnList;
     }
 
     private static JSONArray getJsonResults(String response, String responseName) throws JSONException {
@@ -179,5 +206,21 @@ public class MovieParser extends AsyncTask<String, Void, ArrayList<Movie>> {
         return new Movie(id, adult, backdropPath, genres, imdbId, originalLanguage, originalTitle, overview, popularity,
                 posterPath, productionCompanies, productionCountries, releaseDate, revenue, runtime, spokenLanguages,
                 status, tagline, title, video, voteAverage, voteCount);
+    }
+
+
+    private Movie.Video parseMovieVideo(JSONObject jsonObject) throws JSONException {
+        String id = jsonObject.optString("id", "");
+        String iso_639_1 = jsonObject.optString("iso_639_1", "");
+        String iso_3166_1 = jsonObject.optString("iso_3166_1", "");
+        String name = jsonObject.optString("name", "");
+        String key = jsonObject.optString("key", "");
+        String site = jsonObject.optString("site", "");
+        int size = jsonObject.optInt("size", 1080);
+        String type = jsonObject.optString("type", "");
+        boolean official = jsonObject.optBoolean("official", false);
+        String published_at = jsonObject.optString("published_at", "");
+
+        return new Movie.Video(id, name, site, key, type, size, official, iso_639_1, iso_3166_1, published_at);
     }
 }

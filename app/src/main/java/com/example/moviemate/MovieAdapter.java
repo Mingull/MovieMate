@@ -17,8 +17,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.login.LoginException;
-
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private String LOG_TAG = "MovieAdapter";
     private Context context;
@@ -34,7 +32,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     // onCreateViewHolder method inflates the item view layout
     @Override
-    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate an item view.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_movie_layout, parent, false);
         MovieViewHolder holder = new MovieViewHolder(view);
@@ -50,7 +48,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.tvMovieReleaseDate.setText(movieList.get(position).getReleaseDate());
         holder.tvMovieCategory.setText(String.valueOf(movieList.get(position).getRevenue()));
 
-        Glide.with(this.context).load("https://image.tmdb.org/t/p/original" +movieList.get(position).getPosterPath()).into(holder.ivMoviePicture);
+        Glide.with(this.context).load("https://image.tmdb.org/t/p/original" + movieList.get(position).getPosterPath()).into(holder.ivMoviePicture);
     }
 
     // getItemCount method returns the total number of items in the list
