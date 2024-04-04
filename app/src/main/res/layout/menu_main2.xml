@@ -11,15 +11,45 @@
 
         <TextView
             android:id="@+id/tv_menu_text"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:text="@string/app_name"
-            android:layout_centerVertical="true">
+            android:textColor="@android:color/white"
+            android:textSize="20sp">
 
         </TextView>
+
+        <ImageView
+            android:id="@+id/iv_favorites_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="81dp"
+            android:src="@drawable/baseline_bookmark_add_24">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/iv_go_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="23dp"
+            android:src="@drawable/baseline_cottage_24">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/iv_send_movie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="56dp"
+            android:src="@drawable/baseline_send_24">
+
+        </ImageView>
 
     </RelativeLayout>
 

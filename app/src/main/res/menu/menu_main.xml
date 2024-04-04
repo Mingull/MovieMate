@@ -5,7 +5,6 @@
     <item
         android:id="@+id/action_menu_bar"
         android:orderInCategory="100"
-        android:title="Favorites"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_top_rated"
@@ -21,6 +20,11 @@
         android:id="@+id/action_seen"
         android:orderInCategory="100"
         android:title="Seen"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_favorites"
+        android:orderInCategory="100"
+        android:title="Favorites"
         app:showAsAction="never" />
 
 </menu>

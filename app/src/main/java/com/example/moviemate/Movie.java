@@ -7,6 +7,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "movie_table")
@@ -37,7 +38,7 @@ public class Movie implements Parcelable {
     private boolean video;
     private double voteAverage;
     private int voteCount;
-
+    private ArrayList<Video> videos;
 
     // Default constructor
     public Movie() {
@@ -67,6 +68,7 @@ public class Movie implements Parcelable {
         this.video = video;
         this.voteAverage = voteAverage;
         this.voteCount = voteCount;
+        this.videos = new ArrayList<>();
     }
 
     protected Movie(Parcel in) {
@@ -103,8 +105,8 @@ public class Movie implements Parcelable {
         }
     };
 
-    // Getters and setters for all attributes including genre
 
+    // Getters and setters for all attributes including genre
     public List<Genre> getGenres() {
         return genres;
     }
@@ -281,6 +283,14 @@ public class Movie implements Parcelable {
         this.backdropPath = backdropPath;
     }
 
+    public ArrayList<Video> getVideos() {
+        return this.videos;
+    }
+
+    public void setVideos(ArrayList<Video> videos) {
+        this.videos = videos;
+    }
+
     // Other getters and setters for remaining attributes
 
     @Override
@@ -426,6 +436,115 @@ public class Movie implements Parcelable {
 
         public void setLanguageName(String languageName) {
             this.languageName = languageName;
+        }
+    }
+
+    public static class Video {
+        private String id;
+        private String videoName;
+        private String site;
+        private String key;
+        private String type;
+        private int size;
+        private boolean official;
+        private String iso_639_1;
+        private String iso_3166_1;
+        private String published_at;
+
+        public Video() {
+        }
+
+        public Video(String id, String videoName, String site, String key, String type, int size, boolean official, String iso_639_1, String iso_3166_1, String published_at) {
+            this.id = id;
+            this.videoName = videoName;
+            this.site = site;
+            this.key = key;
+            this.type = type;
+            this.size = size;
+            this.official = official;
+            this.iso_639_1 = iso_639_1;
+            this.iso_3166_1 = iso_3166_1;
+            this.published_at = published_at;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getVideoName() {
+            return videoName;
+        }
+
+        public void setVideoName(String videoName) {
+            this.videoName = videoName;
+        }
+
+        public String getSite() {
+            return site;
+        }
+
+        public void setSite(String site) {
+            this.site = site;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
+
+        public boolean isOfficial() {
+            return official;
+        }
+
+        public void setOfficial(boolean official) {
+            this.official = official;
+        }
+
+        public String getIso_639_1() {
+            return iso_639_1;
+        }
+
+        public void setIso_639_1(String iso_639_1) {
+            this.iso_639_1 = iso_639_1;
+        }
+
+        public String getIso_3166_1() {
+            return iso_3166_1;
+        }
+
+        public void setIso_3166_1(String iso_3166_1) {
+            this.iso_3166_1 = iso_3166_1;
+        }
+
+        public String getPublished_at() {
+            return published_at;
+        }
+
+        public void setPublished_at(String published_at) {
+            this.published_at = published_at;
         }
     }
 }

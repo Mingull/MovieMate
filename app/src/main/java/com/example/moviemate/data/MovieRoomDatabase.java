@@ -2,16 +2,18 @@ package com.example.moviemate.data;
 
 import android.content.Context;
 
+import androidx.room.AutoMigration;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-// import androidx.room.TypeConverters;
+import androidx.room.TypeConverters;
+
 import com.example.moviemate.Movie;
-// import com.example.moviemate.Converters;
+import com.example.moviemate.Converters;
 
 
 @Database(entities = {Movie.class}, version = 1, exportSchema = false)
-// @TypeConverters({Converters.class})
+@TypeConverters({Converters.class})
 public abstract class MovieRoomDatabase extends RoomDatabase {
 
     private static volatile com.example.moviemate.data.MovieRoomDatabase INSTANCE;

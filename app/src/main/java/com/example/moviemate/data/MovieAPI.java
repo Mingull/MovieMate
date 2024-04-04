@@ -2,10 +2,6 @@ package com.example.moviemate.data;
 
 import android.util.Log;
 
-import com.example.moviemate.Movie;
-
-import java.util.ArrayList;
-
 public class MovieAPI implements MovieAPITask.OnMovieAPITaskListener {
     private static String LOG_TAG = "MovieAPI";
     final private static String baseURL = "https://api.themoviedb.org/3";
@@ -22,7 +18,7 @@ public class MovieAPI implements MovieAPITask.OnMovieAPITaskListener {
     }
 
     private void fetchData(String path, String action) {
-        Log.i(LOG_TAG, "fetching data");
+        Log.i(LOG_TAG, "fetchData for " + action + " from " + baseURL + path + "?api_key=" + API_KEY);
         MovieAPITask task = new MovieAPITask(listener);
         task.execute(baseURL + path + "?api_key=" + API_KEY + "&page=1", action); // Add &page=1 for the first page
     }
@@ -32,8 +28,8 @@ public class MovieAPI implements MovieAPITask.OnMovieAPITaskListener {
         this.parserListener = parserListener;
     }
 
-    public void fetchAllMoviesWithRuntime(ArrayList<Movie> movies, MovieParser.OnMovieParserListener parserListener) {
-        for (Movie movie : movies) fetchData("/movie/" + movie.getId(), "fetchMovie");
+    public void fetchMovieVideos(int movieId, MovieParser.OnMovieParserListener parserListener) {
+        fetchData("/movie/" + movieId + "/videos", "fetchMovieVideo");
         this.parserListener = parserListener;
     }
 
@@ -44,9 +40,9 @@ public class MovieAPI implements MovieAPITask.OnMovieAPITaskListener {
     }
 
     @Override
-    public void onFetchedMovie(String movie) {
+    public void onFetchedMovieVideos(String videos) {
         MovieParser parser = new MovieParser(this.parserListener);
-        parser.execute(movie, "parseMoviesWithRuntime");
+        parser.execute(videos, "parseMovieVideos");
     }
 }
  
