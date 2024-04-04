@@ -46,7 +46,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.tvMovieRating.setText(String.valueOf(movieList.get(position).getVoteAverage()));
         holder.tvMovieLength.setText(String.valueOf(movieList.get(position).getRuntime()));
         holder.tvMovieReleaseDate.setText(movieList.get(position).getReleaseDate());
-        holder.tvMovieCategory.setText(String.valueOf(movieList.get(position).getRevenue()));
+        holder.tvMovieCategory.setText("$ " + String.valueOf(movieList.get(position).getRevenue()));
 
         Glide.with(this.context).load("https://image.tmdb.org/t/p/original" + movieList.get(position).getPosterPath()).into(holder.ivMoviePicture);
     }
