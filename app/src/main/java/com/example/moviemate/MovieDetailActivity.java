@@ -77,11 +77,12 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieParse
             tvMovieOverview.setText(movie.getOverview());
 
 
-
             ImageView addToFavoritesButton = findViewById(R.id.iv_favorites_toggle);
 
             repository.getAllMovies().observe((LifecycleOwner) this, movies -> {
-                if (movies.contains(movie)) {
+                if (movies == null || movies.size() == 0) {
+                    addToFavoritesButton.setImageResource(R.drawable.round_star_outline_24);
+                } else if (!movies.contains(movie)) {
                     addToFavoritesButton.setImageResource(R.drawable.round_star_outline_24);
                 } else {
                     addToFavoritesButton.setImageResource(R.drawable.round_star_24);

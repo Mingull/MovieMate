@@ -14,7 +14,7 @@ import com.example.moviemate.enities.Movie;
 import com.example.moviemate.Converters;
 
 
-@Database(entities = {Movie.class, Favorite.class}, version = 1, exportSchema = false)
+@Database(entities = {Movie.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class MovieRoomDatabase extends RoomDatabase {
 
@@ -35,5 +35,5 @@ public abstract class MovieRoomDatabase extends RoomDatabase {
     }
 
     public abstract MovieDao movieDao();
-    public abstract FavoriteDao favoriteDao();
+//    public abstract FavoriteDao favoriteDao();
 }
