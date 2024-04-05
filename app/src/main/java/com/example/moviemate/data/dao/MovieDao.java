@@ -1,4 +1,4 @@
-package com.example.moviemate.data;
+package com.example.moviemate.data.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.moviemate.Movie;
+import com.example.moviemate.enities.Movie;
 
 import java.util.List;
 
@@ -27,11 +27,10 @@ public interface MovieDao {
     void updateMovie(Movie movie);
 
     // Delete all movies from the database
-    @Query("DELETE FROM movie_table")
+    @Query("DELETE FROM movies")
     void deleteAllMovies();
 
     // Retrieve all movies from the database sorted by name
-    @Query("SELECT * FROM movie_table ORDER BY title ASC")
+    @Query("SELECT * FROM movies ORDER BY title ASC")
     LiveData<List<Movie>> getAllMovies();
-
 }

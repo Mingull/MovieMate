@@ -12,12 +12,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 
 import com.example.moviemate.data.MovieParser;
-import com.example.moviemate.data.MovieRepository;
+import com.example.moviemate.data.repositories.FavoriteRepository;
+import com.example.moviemate.data.repositories.MovieRepository;
+import com.example.moviemate.enities.Favorite;
+import com.example.moviemate.enities.Movie;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieParser.OnMovieParserListener {
     private final String LOG_TAG = this.getClass().getSimpleName();
@@ -50,10 +55,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieParse
         wvMovieTrailer = findViewById(R.id.iv_detail_trailer);
 
         Intent intent = getIntent();
-        movie = (Movie) intent.getParcelableExtra(MainActivity.EXTRA_ADDED_MOVIE);
+        movie = intent.getParcelableExtra(MainActivity.EXTRA_ADDED_MOVIE);
+        MovieRepository repository = new MovieRepository(getApplication());
 
         if (movie != null) {
-            if(movie.getVideos() == null){
+            if (movie.getVideos() == null) {
                 fetchVideos(movie);
             } else {
                 displayTrailer(movie.getVideos());
@@ -70,14 +76,32 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieParse
 
             tvMovieOverview.setText(movie.getOverview());
 
-            ImageView addToFavoritesButton = findViewById(R.id.iv_favorites_add);
-            addToFavoritesButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Insert the cocktail into the database
-                    insertMovieToDatabase(movie);
+
+
+            ImageView addToFavoritesButton = findViewById(R.id.iv_favorites_toggle);
+
+            repository.getAllMovies().observe((LifecycleOwner) this, movies -> {
+                if (movies.contains(movie)) {
+                    addToFavoritesButton.setImageResource(R.drawable.round_star_outline_24);
+                } else {
+                    addToFavoritesButton.setImageResource(R.drawable.round_star_24);
                 }
             });
+
+            addToFavoritesButton.setOnClickListener(v -> {
+                // Insert the cocktail into the database
+                repository.getAllMovies().observe((LifecycleOwner) this, movies -> {
+                    if (movies.contains(movie)) {
+                        addToFavoritesButton.setImageResource(R.drawable.round_star_outline_24);
+//                        removeMovieFromFavorites(movie);
+                    } else {
+                        addToFavoritesButton.setImageResource(R.drawable.round_star_24);
+                        insertMovieToFavorites(movie);
+                    }
+                });
+            });
+
+            ImageView ivSeenMovie = findViewById(R.id.iv_seen_toggle);
 
             ImageView ivSendMovie = findViewById(R.id.iv_send_movie);
             // Set click listener for sharing
@@ -99,11 +123,17 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieParse
         }
     }
 
-    private void insertMovieToDatabase(Movie movie) {
+    private void insertMovieToFavorites(Movie movie) {
         MovieRepository repository = new MovieRepository(getApplication());
         repository.insert(movie);
         Toast.makeText(this, "Movie added to favorites", Toast.LENGTH_SHORT).show();
     }
+//    private void removeMovieFromFavorites(Movie movie) {
+//        FavoriteRepository repository = new FavoriteRepository(getApplication());
+//        Favorite favorite = repository.getAllFavorites().getValue().stream().filter(fav -> fav.getMovieId() == movie.getId()).findFirst().orElse(null);
+//        repository.delete(favorite);
+//        Toast.makeText(this, "Movie removed from favorites", Toast.LENGTH_SHORT).show();
+//    }
 
     private void shareMovie() {
         // Create an Intent with action ACTION_SEND
@@ -131,7 +161,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieParse
         if (MainActivity.movieApi != null)
             MainActivity.movieApi.fetchMovieVideos(movie.getId(), this);
     }
-    private void displayTrailer(ArrayList<Movie.Video> videos){
+
+    private void displayTrailer(ArrayList<Movie.Video> videos) {
         if (videos.size() > 0) {
             Movie.Video trailer = videos.stream().filter(video -> video.getType().equals("Trailer") && video.getVideoName().equals("Official Trailer")).findFirst().orElse(null);
             if (trailer != null) {
@@ -143,12 +174,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieParse
                 // return a message if no trailer is available
                 wvMovieTrailer.loadData("<h1 style=\"text-color: black;\">No trailer available</h1>", "text/html", "utf-8");
             }
-        }}
+        }
+    }
 
     @Override
-    public void onParsedMovieVideos(ArrayList<Movie.Video> videos){
+    public void onParsedMovieVideos(ArrayList<Movie.Video> videos) {
         Log.i(LOG_TAG, "onParsedMovieVideos: videos size = " + videos.size());
-        if(movie != null) {
+        if (movie != null) {
             movie.setVideos(videos);
             displayTrailer(videos);
         }

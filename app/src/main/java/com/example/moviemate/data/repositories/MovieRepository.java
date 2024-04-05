@@ -1,12 +1,15 @@
-package com.example.moviemate.data;
+package com.example.moviemate.data.repositories;
 
 import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 
-import com.example.moviemate.Movie;
+import com.example.moviemate.data.MovieRoomDatabase;
+import com.example.moviemate.data.dao.MovieDao;
+import com.example.moviemate.enities.Movie;
 
 import java.util.List;
 
@@ -30,6 +33,7 @@ public class MovieRepository {
         return mAllMovies;
     }
 
+
     // Method to insert a movie into the database
     public void insert(Movie movie) {
         Log.i(LOG_TAG, "insert");
@@ -48,6 +52,27 @@ public class MovieRepository {
         protected Void doInBackground(final Movie... params) {
             Log.i(LOG_TAG, "InsertMovieAsyncTask doInBackground");
             mAsyncTaskDao.insertMovie(params[0]);
+            return null;
+        }
+    }
+
+    public void update(Movie movie) {
+        Log.i(LOG_TAG, "update");
+        new UpdateMovieAsyncTask(mMovieDao).execute(movie);
+    }
+
+    // AsyncTask to update a movie in the database
+    private static class UpdateMovieAsyncTask extends AsyncTask<Movie, Void, Void> {
+        private MovieDao mAsyncTaskDao;
+
+        UpdateMovieAsyncTask(MovieDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Movie... params) {
+            Log.i(LOG_TAG, "UpdateMovieAsyncTask doInBackground");
+            mAsyncTaskDao.updateMovie(params[0]);
             return null;
         }
     }
