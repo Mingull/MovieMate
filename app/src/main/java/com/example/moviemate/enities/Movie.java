@@ -1,4 +1,4 @@
-package com.example.moviemate;
+package com.example.moviemate.enities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,10 +7,12 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.example.moviemate.Converters;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(tableName = "movie_table")
+@Entity(tableName = "movies")
 @TypeConverters({Converters.class})
 public class Movie implements Parcelable {
 

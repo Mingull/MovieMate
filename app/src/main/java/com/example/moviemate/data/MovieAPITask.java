@@ -82,6 +82,9 @@ public class MovieAPITask extends AsyncTask<String, Void, ArrayList<String>> {
             case "fetchMovieVideo":
                 listener.onFetchedMovieVideos(response.get(1));
                 break;
+            case "fetchMovieDetails":
+                listener.onFetchedMovieDetails(response.get(1));
+                break;
             default:
                 break;
         }
@@ -89,9 +92,11 @@ public class MovieAPITask extends AsyncTask<String, Void, ArrayList<String>> {
 
     // Interface to communicate with the caller
     public interface OnMovieAPITaskListener {
-        void onFetchedAllMovies(String movies);
+        void onFetchedAllMovies(String moviesResponse);
 
-        void onFetchedMovieVideos(String movie);
+        void onFetchedMovieVideos(String videosResponse);
+
+        void onFetchedMovieDetails(String detailsResponse);
     }
 
     // Method to convert InputStream to String

@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_menu_bar"
+        android:id="@+id/action_favorites"
         android:orderInCategory="100"
-        android:title="Settings"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_top_rated"
-        android:orderInCategory="100"
-        android:title="Top-rated"
+        android:title="Favorites"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_want_to_see"
@@ -23,9 +18,9 @@
         android:title="Seen"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_menu_bar"
         android:orderInCategory="100"
-        android:title="Favorites"
+        android:title="Settings"
         app:showAsAction="never" />
 
 </menu>

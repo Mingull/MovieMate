@@ -3,12 +3,16 @@ package com.example.moviemate;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toolbar;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.moviemate.data.MovieRepository;
+import com.example.moviemate.data.repositories.FavoriteRepository;
+import com.example.moviemate.data.repositories.MovieRepository;
+import com.example.moviemate.enities.Favorite;
 
 import java.util.ArrayList;
 
@@ -22,6 +26,11 @@ public class FavoritesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
+
+        ActionBar toolbar = getSupportActionBar();
+        if (toolbar != null) {
+            toolbar.setTitle("Favorite Movies");
+        }
 
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.rv_favorite_movies);
@@ -46,7 +55,8 @@ public class FavoritesActivity extends AppCompatActivity {
             mAdapter.setData(movies); // Update the adapter with new data
         });
     }
-    // Method to delete all favorite cocktails
+
+    // Method to delete all favorite movies
     private void deleteAllFavorites() {
         MovieRepository repository = new MovieRepository(getApplication());
         repository.deleteAllMovies();

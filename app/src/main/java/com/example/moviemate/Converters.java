@@ -1,15 +1,13 @@
 package com.example.moviemate;
 
-import android.util.Log;
-
 import androidx.room.TypeConverter;
 
+import com.example.moviemate.enities.Movie;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 

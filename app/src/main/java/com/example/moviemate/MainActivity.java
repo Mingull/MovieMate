@@ -2,6 +2,7 @@ package com.example.moviemate;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -14,17 +15,20 @@ import android.view.MenuItem;
 
 import com.example.moviemate.data.MovieAPI;
 import com.example.moviemate.data.MovieParser;
+import com.example.moviemate.data.repositories.MovieRepository;
+import com.example.moviemate.enities.Movie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MovieParser.OnMovieParserListener, MovieAdapter.OnItemClickListener {
     private String LOG_TAG = "MainActivity";
     public static final String EXTRA_ADDED_MOVIE = "added_movie";
-
     private RecyclerView recyclerView;
     private MovieAdapter mAdapter;
     public static MovieAPI movieApi;
-    private ArrayList<Movie> movies;
+    private ArrayList<Movie> movies = new ArrayList<>();
+    MovieRepository movieRepo;
 
 
     @Override
@@ -42,7 +46,10 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
         recyclerView = findViewById(R.id.Rv_movieList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        movieRepo = new MovieRepository(getApplication());
+
         movieApi.fetchAllMovies(this);
+
     }
 
     @Override
@@ -70,9 +77,6 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
         if (id == R.id.action_menu_bar) {
             // Handle menu bar action
             return true;
-        } else if (id == R.id.action_top_rated) {
-            // Handle top-rated action
-            return true;
         } else if (id == R.id.action_want_to_see) {
             // Handle want to see action
             return true;
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
     @Override
     public void onParsedAllMovies(ArrayList<Movie> movies) {
         Log.i(LOG_TAG, "onParsedAllMovies: movies size = " + movies.size());
+
         if (mAdapter == null) {
             mAdapter = new MovieAdapter(this, movies, this);
             recyclerView.setAdapter(mAdapter);
@@ -99,28 +104,23 @@ public class MainActivity extends AppCompatActivity implements MovieParser.OnMov
             mAdapter.setData(movies); // Assuming you have a method to update data in the adapter
             mAdapter.notifyDataSetChanged();
         }
+
+        for (Movie movie : movies) {
+            movieApi.fetchMovieDetails(movie.getId(), this);
+        }
     }
 
-
-//    @Override
-//    public void onParsedAllMovies(ArrayList<Movie> movies) {
-//        if (movieApi == null) return;
-//
-//        movieApi.fetchAllMoviesWithRuntime(movies, this);
-//    }
+    @Override
+    public void onParsedMovieDetails(Movie movie) {
+        Log.i(LOG_TAG, "onParsedMovieDetails - movie: " + movie);
 
 
-//    @Override
-//    public void onParsedAllMoviesWithRuntime(ArrayList<Movie> movies) {
-//        Log.i(LOG_TAG, "onParsedAllMovies: movies size = " + movies.size());
-//        if (mAdapter == null) {
-//            mAdapter = new MovieAdapter(this, movies, this);
-//            recyclerView.setAdapter(mAdapter);
-//        } else {
-//            mAdapter.setData(movies); // Assuming you have a method to update data in the adapter
-//            mAdapter.notifyDataSetChanged();
-//        }
-//    }
+        movies.add(movie);
+
+        mAdapter.setData(movies); // Assuming you have a method to update data in the adapter
+        mAdapter.notifyDataSetChanged();
+    }
+
 
     // Callback method invoked when a cocktail item is clicked
     @Override

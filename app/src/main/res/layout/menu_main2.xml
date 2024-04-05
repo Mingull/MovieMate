@@ -4,53 +4,52 @@
     android:layout_height="wrap_content"
     android:background="@color/antraciet_grijs">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/tv_menu_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="16dp"
-            android:text="@string/app_name"
-            android:textColor="@android:color/white"
-            android:textSize="20sp">
-
-        </TextView>
-
-        <ImageView
-            android:id="@+id/iv_favorites_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="81dp"
-            android:src="@drawable/baseline_bookmark_add_24">
-
-        </ImageView>
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="16dp">
 
         <ImageView
             android:id="@+id/iv_go_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="23dp"
-            android:src="@drawable/baseline_cottage_24">
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/baseline_chevron_left_24" />
 
-        </ImageView>
+        <TextView
+            android:id="@+id/tv_menu_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:id="@+id/iv_favorites_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:paddingEnd="5dp"
+            android:src="@drawable/round_star_outline_24" />
+
+        <ImageView
+            android:id="@+id/iv_seen_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:paddingEnd="5dp"
+            android:src="@drawable/outline_visibility_24" />
 
         <ImageView
             android:id="@+id/iv_send_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="56dp"
-            android:src="@drawable/baseline_send_24">
+            android:layout_gravity="end|center_vertical"
+            android:src="@drawable/outline_share_24" />
 
-        </ImageView>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -33,6 +33,11 @@ public class MovieAPI implements MovieAPITask.OnMovieAPITaskListener {
         this.parserListener = parserListener;
     }
 
+    public void fetchMovieDetails(int movieId, MovieParser.OnMovieParserListener parserListener) {
+        fetchData("/movie/" + movieId, "fetchMovieDetails");
+        this.parserListener = parserListener;
+    }
+
     @Override
     public void onFetchedAllMovies(String moviesResponse) {
         MovieParser parser = new MovieParser(this.parserListener);
@@ -40,9 +45,14 @@ public class MovieAPI implements MovieAPITask.OnMovieAPITaskListener {
     }
 
     @Override
-    public void onFetchedMovieVideos(String videos) {
+    public void onFetchedMovieVideos(String videosResponse) {
         MovieParser parser = new MovieParser(this.parserListener);
-        parser.execute(videos, "parseMovieVideos");
+        parser.execute(videosResponse, "parseMovieVideos");
+    }
+    @Override
+    public void onFetchedMovieDetails(String detailsResponse) {
+        MovieParser parser = new MovieParser(this.parserListener);
+        parser.execute(detailsResponse, "parseMovieDetails");
     }
 }
  
